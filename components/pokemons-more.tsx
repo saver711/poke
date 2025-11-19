@@ -3,6 +3,7 @@
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { useQueryState } from "nuqs";
 import { Suspense } from "react";
+import { useErrorBoundary } from "react-error-boundary";
 import { INCREMENTAL_PAGE_SIZE, QUERY_KEYS } from "@/app/consts";
 import { getPokemons } from "@/app/services/pokemons.service";
 import { CardSkeleton } from "./card-skeleton";
@@ -11,6 +12,7 @@ import { PokemonCard } from "./pokemon-card";
 import { Button } from "./ui/button";
 
 export const PokemonsMore = () => {
+	const { showBoundary } = useErrorBoundary();
 	const [pages, setPages] = useQueryState("pages", {
 		defaultValue: 1,
 		parse: (value) => parseInt(value) || 1,
@@ -19,11 +21,15 @@ export const PokemonsMore = () => {
 
 	const totalLimit = pages * INCREMENTAL_PAGE_SIZE;
 
-	const { data, isLoading, isFetching } = useQuery({
+	const { data, isLoading, isFetching, error } = useQuery({
 		queryKey: QUERY_KEYS.pokemons_more(pages),
 		queryFn: () => getPokemons({ offset: 0, limit: totalLimit }),
 		placeholderData: keepPreviousData,
 	});
+
+	if (error) {
+		showBoundary(new Error(error.message)); // of course we can handle the error better than this - not to block the whole UI
+	}
 
 	const totalCount = data?.count || 0;
 	const totalPages = Math.ceil(totalCount / INCREMENTAL_PAGE_SIZE);
