@@ -7,6 +7,6 @@ export default defineConfig({
 	test: {
 		passWithNoTests: true,
 		environment: "jsdom",
-		include: ["app/**/*.test.ts"],
+		include: ["app/**/*.test.ts", "lib/**/*.test.ts"],
 	},
 });
