@@ -130,10 +130,6 @@ jobs:
           path: playwright-report/
           retention-days: 30
 
-      - name: Skip notice
-        if: steps.check_tests.outputs.tests_exist == 'false'
-        run: echo "⏭️ No Playwright tests found - skipping entire Playwright workflow"
-
   # Just to make sure everything is fine before auto-deploying
   build:
     runs-on: ubuntu-latest

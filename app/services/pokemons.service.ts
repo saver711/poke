@@ -1,5 +1,5 @@
 import { appFetch } from "@/lib/poke-utils/app-fetch";
-import { DEFAULT_PAGE_SIZE } from "../consts";
+import { INCREMENTAL_PAGE_SIZE } from "../consts";
 import type { Pokemon } from "../models";
 import type { PokeResponse } from "../models/poke-response.model";
 
@@ -10,7 +10,7 @@ interface GetPokemonsParams {
 
 export const getPokemons = async ({
 	offset = 0,
-	limit = DEFAULT_PAGE_SIZE,
+	limit = INCREMENTAL_PAGE_SIZE,
 }: GetPokemonsParams): Promise<PokeResponse> => {
 	const params = new URLSearchParams({
 		offset: String(offset),

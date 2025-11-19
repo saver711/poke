@@ -11,7 +11,7 @@ import { PokemonCard } from "./pokemon-card";
 export const PaginatedPokemons = () => {
 	const [page, setPage] = useQueryState("page", {
 		defaultValue: 1,
-		parse: (value) => parseInt(value, 10) || 1,
+		parse: (value) => parseInt(value) || 1,
 		history: "push",
 	});
 
