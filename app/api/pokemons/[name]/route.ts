@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
+import { POKE_API_BASE_URL } from "@/app/consts";
 import type { Pokemon } from "@/app/models/pokemon.model";
-
-const POKE_API_BASE_URL = "https://pokeapi.co/api/v2";
 
 interface Context {
 	params: Promise<{

@@ -1,7 +1,6 @@
-import { appFetch } from "@/lib/poke-utils/app-fetch";
+import { appFetch } from "@/lib/poke-utils";
 import { INCREMENTAL_PAGE_SIZE } from "../consts";
-import type { Pokemon } from "../models";
-import type { PokeResponse } from "../models/poke-response.model";
+import type { Pokemon, PokeResponse } from "../models";
 
 interface GetPokemonsParams {
 	offset?: number;

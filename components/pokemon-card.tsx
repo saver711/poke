@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { QUERY_KEYS } from "@/app/consts";
 import { getPokemonDetails } from "@/app/services/pokemons.service";
-import { formatPokemonName } from "@/lib/poke-utils/format-pokemon-name";
+import { formatPokemonName } from "@/lib/poke-utils";
 import {
 	Card,
 	CardContent,
