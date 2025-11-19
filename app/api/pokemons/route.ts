@@ -1,8 +1,6 @@
 import { NextResponse } from "next/server";
-import { INCREMENTAL_PAGE_SIZE } from "@/app/consts";
+import { INCREMENTAL_PAGE_SIZE, POKE_API_BASE_URL } from "@/app/consts";
 import type { PokeResponse } from "@/app/models/poke-response.model";
-
-const POKE_API_BASE_URL = "https://pokeapi.co/api/v2";
 
 export const GET = async (request: Request) => {
 	const { searchParams } = new URL(request.url);
