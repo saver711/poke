@@ -5,6 +5,7 @@ import { setModeAction } from "@/app/actions/set-mode.action";
 import type { Mode } from "@/app/models";
 import { PaginatedListSkeleton } from "./paginated-list-skeleton";
 import { PaginatedPokemons } from "./paginated-pokemons";
+import { PokemonsMore } from "./pokemons-more";
 import { Button } from "./ui/button";
 
 interface PokemonsListProps {
@@ -61,11 +62,7 @@ export const PokemonsList = ({ defaultMode }: PokemonsListProps) => {
 					<PaginatedPokemons />
 				</Suspense>
 			)}
-			{/* {mode === "more" && (
-				<Suspense fallback={<MoreListSkeleton />}>
-					<PokemonsMore />
-				</Suspense>
-			)} */}
+			{mode === "more" && <PokemonsMore />}
 		</>
 	);
 };

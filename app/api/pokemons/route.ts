@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { DEFAULT_PAGE_SIZE } from "@/app/consts";
+import { INCREMENTAL_PAGE_SIZE } from "@/app/consts";
 import type { PokeResponse } from "@/app/models/poke-response.model";
 
 const POKE_API_BASE_URL = "https://pokeapi.co/api/v2";
@@ -7,7 +7,7 @@ const POKE_API_BASE_URL = "https://pokeapi.co/api/v2";
 export const GET = async (request: Request) => {
 	const { searchParams } = new URL(request.url);
 
-	const limit = searchParams.get("limit") || DEFAULT_PAGE_SIZE;
+	const limit = searchParams.get("limit") || INCREMENTAL_PAGE_SIZE;
 	const offset = searchParams.get("offset") || "0";
 
 	if (Number.isNaN(Number(limit)) || Number.isNaN(Number(offset))) {

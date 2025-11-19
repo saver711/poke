@@ -28,7 +28,7 @@ export default function Home() {
 					</strong>
 				</p>
 				<div className="mt-12">
-					<Link href="/list">
+					<Link href="/pokemons">
 						<Button
 							size="lg"
 							className="gap-3 cursor-pointer bg-red-600 hover:bg-red-700 text-white text-lg px-8 py-6 shadow-2xl shadow-red-500/50 transition-all duration-300 transform hover:scale-[1.03] hover:shadow-red-500/80"
