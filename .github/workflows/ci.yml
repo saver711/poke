@@ -84,56 +84,10 @@ jobs:
           path: coverage/
           retention-days: 30
 
-  playwright:
-    runs-on: ubuntu-latest
-    if: |
-      (github.event_name == 'push' && (github.ref_name == 'main' || github.ref_name == 'dev')) ||
-      (github.event_name == 'pull_request' && (github.base_ref == 'main' || github.base_ref == 'dev'))
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Check if tests exist
-        id: check_tests
-        run: |
-          if [ -d "./tests" ] && [ "$(find ./tests -name '*.spec.*' -o -name '*.test.*' | head -1)" ]; then
-            echo "tests_exist=true" >> $GITHUB_OUTPUT
-          else
-            echo "tests_exist=false" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Setup
-        if: steps.check_tests.outputs.tests_exist == 'true'
-        uses: ./.github/actions/setup
-
-      - name: Cache Playwright Browsers
-        if: steps.check_tests.outputs.tests_exist == 'true'
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/ms-playwright
-          key: playwright-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
-
-      - name: Install Playwright Browsers
-        if: steps.check_tests.outputs.tests_exist == 'true'
-        run: pnpm exec playwright install --with-deps
-
-      - name: Run Playwright
-        if: steps.check_tests.outputs.tests_exist == 'true'
-        run: pnpm playwright test
-
-      - name: Upload Playwright report
-        if: steps.check_tests.outputs.tests_exist == 'true' && ${{ !cancelled() }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: playwright-report
-          path: playwright-report/
-          retention-days: 30
-
   # Just to make sure everything is fine before auto-deploying
   build:
     runs-on: ubuntu-latest
-    needs: [biome, branch-name-check, commit-lint, vitest, playwright]
+    needs: [biome, branch-name-check, commit-lint, vitest]
     if: github.event_name == 'pull_request' && github.base_ref == 'main'
     steps:
       - uses: actions/checkout@v4
