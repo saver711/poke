@@ -7,7 +7,7 @@ A high-performance Pokémon index application built with Next.js 15, leveraging 
 ## 🌐 Live Demos
 
 * **Primary (Netlify):** [https://bespoke-stardust-2936e0.netlify.app/](https://bespoke-stardust-2936e0.netlify.app/)
-* **Backup (Vercel):** [https://poke-five-rho.vercel.app/pokemons](https://poke-five-rho.vercel.app/pokemons)
+* **Backup (Vercel):** [https://poke-chi-three.vercel.app/](https://poke-chi-three.vercel.app/)
     > **Note:** *I stand against Vercel's recent statements. This deployment exists solely for uptime redundancy as I currently do not trust Netlify's persistence for this specific project.*
 
 ***
