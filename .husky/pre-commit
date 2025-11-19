@@ -1,0 +1,14 @@
+pnpm exec lint-staged
+echo "✅📝 Linting went well!"
+vitest
+echo "✅🧪 Testing went well!"
+
+# This can be enhanced
+branch_name=$(git symbolic-ref --short HEAD)
+if ! echo "$branch_name" | grep -Eq '^(main|dev|develop|[a-z]{2}-(fix|feat|chore|add)-POKE-[0-9]+-[a-z0-9-]+)$'; then
+  echo "❌ Invalid branch name: $branch_name"
+  echo "✅ Allowed: main, dev, develop, or xx-type-POKE-1234-description"
+  exit 1
+fi
+
+echo "✅ Branch name is valid: $branch_name"

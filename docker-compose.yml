@@ -1,0 +1,17 @@
+services:
+  poke-app:
+    image: poke-app
+    container_name: poke-app-container
+    build: .
+    restart: always
+    command: pnpm dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/.next
+
+volumes:
+  node_modules:
+  next:
