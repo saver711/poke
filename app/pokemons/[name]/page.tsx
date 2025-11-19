@@ -1,7 +1,9 @@
 import { ArrowLeft, Ruler, Weight } from "lucide-react";
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { POKE_API_BASE_URL } from "@/app/consts";
 import type { Pokemon } from "@/app/models";
 import { getPokemonDetails } from "@/app/services/pokemons.service";
 import { Button } from "@/components/ui/button";
@@ -9,24 +11,24 @@ import { Card, CardContent } from "@/components/ui/card";
 import { formatPokemonName } from "@/lib/poke-utils/index";
 import { cn } from "@/lib/utils";
 
-// export const revalidate = 86400; // 24 hours
-// export const dynamicParams = true; // dynamic parameters that aren't pre-generated
+export const revalidate = 86400; // 24 hours
+export const dynamicParams = true; // dynamic parameters that aren't pre-generated
 
-// export async function generateStaticParams() {
-// 	// Fetch the first 50 Pokemon to pre-render at build time. [This might not the best thing to do - but i just wanted to demonstrate]
-// 	// We fetch directly from PokeAPI here to avoid build-time localhost fetch issues.
-// 	try {
-// 		const res = await fetch(`${POKE_API_BASE_URL}/pokemon?limit=50`);
-// 		const data = await res.json();
+export async function generateStaticParams() {
+	// Fetch the first 50 Pokemon to pre-render at build time. [This might not the best thing to do - but i just wanted to demonstrate]
+	// We fetch directly from PokeAPI here to avoid build-time localhost fetch issues.
+	try {
+		const res = await fetch(`${POKE_API_BASE_URL}/pokemon?limit=50`);
+		const data = await res.json();
 
-// 		return data.results.map((pokemon: { name: string }) => ({
-// 			name: pokemon.name,
-// 		}));
-// 	} catch (_error) {
-// 		console.warn("Failed to generate static params:", _error);
-// 		return [];
-// 	}
-// }
+		return data.results.map((pokemon: { name: string }) => ({
+			name: pokemon.name,
+		}));
+	} catch (_error) {
+		console.warn("Failed to generate static params:", _error);
+		return [];
+	}
+}
 
 interface Props {
 	params: Promise<{
@@ -34,37 +36,37 @@ interface Props {
 	}>;
 }
 
-// export async function generateMetadata({ params }: Props): Promise<Metadata> {
-// 	try {
-// 		const metaParams = await params;
-// 		const pokemon = await getPokemonDetails(metaParams.name);
-// 		const formattedName = formatPokemonName(pokemon.name);
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+	try {
+		const metaParams = await params;
+		const pokemon = await getPokemonDetails(metaParams.name);
+		const formattedName = formatPokemonName(pokemon.name);
 
-// 		return {
-// 			title: `${formattedName} | PokéDex`,
-// 			description: `Discover stats, types, and sprites for ${formattedName}.`,
-// 			openGraph: {
-// 				title: `${formattedName} | PokéDex`,
-// 				description: `Height: ${pokemon.height} | Weight: ${pokemon.weight}`,
-// 				images: [
-// 					{
-// 						url:
-// 							pokemon.sprites.other["official-artwork"].front_default ||
-// 							pokemon.sprites.front_default ||
-// 							"",
-// 						width: 800,
-// 						height: 600,
-// 						alt: formattedName,
-// 					},
-// 				],
-// 			},
-// 		};
-// 	} catch {
-// 		return {
-// 			title: "Pokémon Not Found",
-// 		};
-// 	}
-// }
+		return {
+			title: `${formattedName} | PokéDex`,
+			description: `Discover stats, types, and sprites for ${formattedName}.`,
+			openGraph: {
+				title: `${formattedName} | PokéDex`,
+				description: `Height: ${pokemon.height} | Weight: ${pokemon.weight}`,
+				images: [
+					{
+						url:
+							pokemon.sprites.other["official-artwork"].front_default ||
+							pokemon.sprites.front_default ||
+							"",
+						width: 800,
+						height: 600,
+						alt: formattedName,
+					},
+				],
+			},
+		};
+	} catch {
+		return {
+			title: "Pokémon Not Found",
+		};
+	}
+}
 
 export default async function PokemonPage({ params }: Props) {
 	const pageParams = await params;
