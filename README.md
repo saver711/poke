@@ -1,11 +1,3 @@
-# ⚠️ Dynamic Route Deployment Warning
-
-There is a known issue affecting the deployment of dynamic routes (`/pokemons/[name]`) on current Vercel and Netlify configurations for this project, leading to potential instability or 404 errors on some detail pages.
-
-**For a stable and fully functional experience, it is highly recommended to clone or download the repository and run the application locally using the provided Docker or Local Setup methods.**
-
-***
-
 # PokéDex
 
 A high-performance Pokémon index application built with Next.js 15, leveraging modern features like **React Server Components (RSC)** and **TanStack Query** with React Suspense for data fetching.
@@ -57,8 +49,8 @@ Running with Docker ensures you have the exact environment and dependencies isol
 
 1.  **Clone the repository**
     ```bash
-    git clone [https://github.com/saver711/poke](https://github.com/saver711/poke)
-    cd YOUR_REPO
+    git clone https://github.com/saver711/poke
+    cd poke
     ```
 
 2.  **Run with Docker Compose**
