@@ -67,7 +67,7 @@ If you prefer running Node directly on your machine.
 
 1.  **Install dependencies**
     ```bash
-    pnpm install
+    pnpm i
     ```
 
 2.  **Run dev server**

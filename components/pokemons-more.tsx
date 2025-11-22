@@ -2,7 +2,7 @@
 
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { useQueryState } from "nuqs";
-import { Suspense } from "react";
+import { Suspense, useCallback, useEffect } from "react";
 import { useErrorBoundary } from "react-error-boundary";
 import { INCREMENTAL_PAGE_SIZE, QUERY_KEYS } from "@/app/consts";
 import { getPokemons } from "@/app/services/pokemons.service";
@@ -11,7 +11,11 @@ import { MoreListSkeleton } from "./more-list-skeleton";
 import { PokemonCard } from "./pokemon-card";
 import { Button } from "./ui/button";
 
-export const PokemonsMore = () => {
+interface PokemonsMoreProps {
+	infiniteScroll?: boolean;
+}
+
+export const PokemonsMore = ({ infiniteScroll = false }: PokemonsMoreProps) => {
 	const { showBoundary } = useErrorBoundary();
 	const [pages, setPages] = useQueryState("pages", {
 		defaultValue: 1,
@@ -35,10 +39,31 @@ export const PokemonsMore = () => {
 	const totalPages = Math.ceil(totalCount / INCREMENTAL_PAGE_SIZE);
 	const hasMore = pages < totalPages;
 
-	const loadNextPage = () => {
+	const loadNextPage = useCallback(() => {
 		if (!hasMore || isLoading) return;
 		setPages(pages + 1);
-	};
+	}, [hasMore, isLoading, pages, setPages]);
+
+	useEffect(() => {
+		if (!infiniteScroll || !hasMore || isFetching) return;
+
+		const observer = new IntersectionObserver((entries) => {
+			if (entries[0].isIntersecting) {
+				loadNextPage();
+			}
+		});
+
+		const trigger = document.getElementById("infinite-scroll-trigger");
+		if (trigger) {
+			observer.observe(trigger);
+		}
+
+		return () => {
+			if (trigger) {
+				observer.unobserve(trigger);
+			}
+		};
+	}, [infiniteScroll, hasMore, isFetching, loadNextPage]);
 
 	if (!data && isLoading) {
 		return <MoreListSkeleton />;
@@ -55,7 +80,10 @@ export const PokemonsMore = () => {
 			</div>
 
 			{hasMore && (
-				<div className="flex justify-center mt-8">
+				<div
+					id="infinite-scroll-trigger"
+					className="flex justify-center mt-8 h-10"
+				>
 					<Button
 						onClick={loadNextPage}
 						disabled={isFetching}

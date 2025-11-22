@@ -11,7 +11,7 @@ export default async function ListPage() {
 	const defaultMode: Mode = modeCookie === "more" ? "more" : "pagination";
 	return (
 		<main className="min-h-screen bg-gray-50">
-			<header className="py-6 bg-white shadow-md mb-6 relative">
+			<header className="py-6 bg-white shadow-md relative">
 				<div className="max-w-7xl mx-auto px-4 flex justify-between items-center">
 					<Link
 						className="absolute left-1 sm:left-5 top-1/2 -translate-y-1/2"
